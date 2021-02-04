@@ -18,7 +18,7 @@ body {
 
 /* Common */
 
-h1 {
+/* h1 {
 	font-size: 1.8rem;
 	padding: 1rem 0;
 }
@@ -26,7 +26,7 @@ h1 {
 h2 {
 	font-size: 1.6rem;
 	padding: 1rem 0;
-}
+} */
 
 a {
 	text-decoration: none;
@@ -49,6 +49,7 @@ input,
 select,
 textarea,
 button {
+	padding: 1rem;
 	border-radius: 0.3rem;
 	font-size: 1.6rem;
 	border: 0.1rem #a4a4a4 solid;
@@ -104,9 +105,9 @@ button:hover {
 }
 
 .badge {
-	position: absolute;
-	top: 0.3%;
-	left: 94.3%;
+	/* position: absolute; */
+	/* top: 0.3%; */
+	/* left: 94.3%; */
 	background-color: #f02020;
 	color: #ffffff;
 	border-radius: 50%;
@@ -473,6 +474,11 @@ details-action ul {
 	margin-bottom: 1rem;
 }
 
+.form label {
+	margin: 1rem 0;
+	display: block;
+}
+
 /* Products */
 
 .product-header {
@@ -560,4 +566,28 @@ tbody > tr:nth-child(odd) {
 	font-size: 2rem;
 	color: #c04000;
 	font-weight: bold;
+}
+
+/* Dropdown */
+
+.dropdown {
+	display: inline-block;
+	position: relative;
+}
+
+.dropdown-content {
+	position: absolute;
+	display: none;
+	right: 0;
+	min-width: 12rem;
+	padding: 0.5rem;
+	z-index: 1;
+	background-color: #203040;
+	margin: 0;
+	margin-top: 0.4rem;
+	border-radius: 0.5rem;
+}
+
+.dropdown:hover .dropdown-content {
+	display: block;
 }

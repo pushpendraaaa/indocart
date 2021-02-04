@@ -1,9 +1,8 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
 /* eslint-disable no-unused-vars */
 // import logo from "./logo.svg";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { BrowserRouter, Link, Route } from "react-router-dom";
-import { register } from "./redux/actions/userActions";
 import CartScreen from "./screens/CartScreen";
 import HomeScreen from "./screens/HomeScreen";
 import ProductScreen from "./screens/ProductScreen";
@@ -13,15 +12,22 @@ import ProductsScreen from "./screens/ProductsScreen";
 import ShippingScreen from "./screens/ShippingScreen";
 import PaymentScreen from "./screens/PaymentScreen";
 import PlaceOrderScreen from "./screens/PlaceOrderScreen";
+import { signout } from "./redux/actions/userActions";
 // import { data } from "./data";
 // import "./App.css";
 
 function App() {
+	const dispatch = useDispatch();
+
 	const userSignin = useSelector((state) => state.userSignin);
 	const { userInfo } = userSignin;
 
 	const cart = useSelector((state) => state.cart);
 	const { cartItems } = cart;
+
+	const signoutHandler = () => {
+		dispatch(signout());
+	};
 
 	const openMenu = () => {
 		document.querySelector(".sidebar").classList.add("open");
@@ -47,7 +53,18 @@ function App() {
 							)}
 						</Link>
 						{userInfo ? (
-							<Link to="/profile">{userInfo.name}</Link>
+							<div className="dropdown">
+								<Link to="#">
+									{userInfo.name} <i className="fa fa-caret-down"></i>{" "}
+								</Link>
+								<ul className="dropdown-content">
+									<li>
+										<Link to="#signout" onClick={signoutHandler}>
+											Sign Out
+										</Link>
+									</li>
+								</ul>
+							</div>
 						) : (
 							<Link to="/signin">
 								<b>Sign In</b>
