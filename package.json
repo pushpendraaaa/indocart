@@ -1,0 +1,27 @@
+{
+	"name": "indocart",
+	"version": "1.0.0",
+	"description": "This is the portfolio web application.",
+	"main": "index.js",
+	"scripts": {
+		"start": "nodemon --watch backend --exec babel-node backend/server.js"
+	},
+	"repository": {
+		"type": "git",
+		"url": "(https://github.com/pushpendraaaa/indocart.git)"
+	},
+	"author": "Pushpendra Kushwaha",
+	"license": "ISC",
+	"dependencies": {
+		"@babel/cli": "^7.12.10",
+		"@babel/core": "^7.12.10",
+		"@babel/node": "^7.12.10",
+		"@babel/preset-env": "^7.12.11",
+		"body-parser": "^1.19.0",
+		"dotenv": "^8.2.0",
+		"express": "^4.17.1",
+		"jsonwebtoken": "^8.5.1",
+		"mongoose": "^5.11.14",
+		"nodemon": "^2.0.7"
+	}
+}
