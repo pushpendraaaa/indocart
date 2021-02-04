@@ -1,10 +1,21 @@
 import express from "express";
+import expressAsyncHandler from "express-async-handler";
+import data from "../data";
 import User from "../models/userModel";
 import { getToken } from "../util";
 
-const router = express.Router();
+const userRouter = express.Router();
 
-router.post("/signin", async (req, res) => {
+userRouter.get(
+	"/seed",
+	expressAsyncHandler(async (req, res) => {
+		// await User.remove({});
+		const createdUsers = await User.insertMany(data.users);
+		res.send({ createdUsers });
+	})
+);
+
+userRouter.post("/signin", async (req, res) => {
 	const signinUser = await User.findOne({
 		email: req.body.email,
 		password: req.body.password,
@@ -22,7 +33,7 @@ router.post("/signin", async (req, res) => {
 	}
 });
 
-router.post("/register", async (req, res) => {
+userRouter.post("/register", async (req, res) => {
 	const user = new User({
 		name: req.body.name,
 		email: req.body.email,
@@ -42,7 +53,7 @@ router.post("/register", async (req, res) => {
 	}
 });
 
-router.get("/createadmin", async (req, res) => {
+userRouter.get("/createadmin", async (req, res) => {
 	try {
 		const user = new User({
 			name: "Pushpendra",
@@ -58,4 +69,4 @@ router.get("/createadmin", async (req, res) => {
 	}
 });
 
-export default router;
+export default userRouter;

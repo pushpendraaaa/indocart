@@ -5,8 +5,8 @@ import dotenv from "dotenv";
 import bodyParser from "body-parser";
 // import data from "./data";
 import config from "./config";
-import userRoute from "./routes/userRoute";
-import productRoute from "./routes/productRoute";
+import productRoute from "./routers/productRoute";
+import userRouter from "./routers/userRouter";
 
 dotenv.config();
 const mongodbUrl = config.MONGODB_URL;
@@ -22,7 +22,7 @@ const app = express();
 
 app.use(bodyParser.json());
 
-app.use("/api/users", userRoute);
+app.use("/api/users", userRouter);
 app.use("/api/products", productRoute);
 
 // app.get("/api/products/:id", (req, res) => {
@@ -37,6 +37,10 @@ app.use("/api/products", productRoute);
 // app.get("/api/products", (req, res) => {
 // 	res.send(data.products);
 // });
+
+app.use((err, req, res, next) => {
+	res.status(500).send({ message: err.message });
+});
 
 app.get("/", (req, res) => {
 	res.send("Server is ready.");
