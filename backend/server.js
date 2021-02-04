@@ -5,8 +5,8 @@ import dotenv from "dotenv";
 import bodyParser from "body-parser";
 // import data from "./data";
 import config from "./config";
-import productRoute from "./routers/productRoute";
 import userRouter from "./routers/userRouter";
+import productRouter from "./routers/productRouter";
 
 dotenv.config();
 const mongodbUrl = config.MONGODB_URL;
@@ -23,7 +23,7 @@ const app = express();
 app.use(bodyParser.json());
 
 app.use("/api/users", userRouter);
-app.use("/api/products", productRoute);
+app.use("/api/products", productRouter);
 
 // app.get("/api/products/:id", (req, res) => {
 // 	const productId = req.params.id;

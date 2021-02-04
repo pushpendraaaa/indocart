@@ -1,24 +1,29 @@
 import express from "express";
+import data from "../data";
+import expressAsyncHandler from "express-async-handler";
 import Product from "../models/productModel";
 import { isAdmin, isAuth } from "../util";
 
-const router = express.Router();
+const productRouter = express.Router();
 
-router.get("/", async (req, res) => {
-	const products = await Product.find({});
-	res.send(products);
-});
+productRouter.get(
+	"/seed",
+	expressAsyncHandler(async (req, res) => {
+		// await Product.remove({});
+		const createdProducts = await Product.insertMany(data.products);
+		res.send({ createdProducts });
+	})
+);
 
-router.get("/:id", async (req, res) => {
-	const product = await Product.findOne({ _id: req.params.id });
-	if (product) {
-		res.send(product);
-	} else {
-		res.status(404).send({ message: "Product not found." });
-	}
-});
+productRouter.get(
+	"/",
+	expressAsyncHandler(async (req, res) => {
+		const products = await Product.find({});
+		res.send(products);
+	})
+);
 
-router.post("/", isAuth, isAdmin, async (req, res) => {
+productRouter.post("/", isAuth, isAdmin, async (req, res) => {
 	const product = new Product({
 		name: req.body.name,
 		image: req.body.image,
@@ -38,7 +43,7 @@ router.post("/", isAuth, isAdmin, async (req, res) => {
 	}
 });
 
-router.put("/:id", isAuth, isAdmin, async (req, res) => {
+productRouter.put("/:id", isAuth, isAdmin, async (req, res) => {
 	const productId = req.params.id;
 	const product = await Product.findById(productId);
 	if (product) {
@@ -60,7 +65,7 @@ router.put("/:id", isAuth, isAdmin, async (req, res) => {
 	}
 });
 
-router.delete("/:id", isAuth, isAdmin, async (req, res) => {
+productRouter.delete("/:id", isAuth, isAdmin, async (req, res) => {
 	const deletedProduct = await Product.findById(req.params.id);
 	if (deletedProduct) {
 		await deletedProduct.remove();
@@ -70,4 +75,16 @@ router.delete("/:id", isAuth, isAdmin, async (req, res) => {
 	}
 });
 
-export default router;
+productRouter.get(
+	"/:id",
+	expressAsyncHandler(async (req, res) => {
+		const product = await Product.findById(req.params.id);
+		if (product) {
+			res.send(product);
+		} else {
+			res.status(404).send({ message: "Product not found." });
+		}
+	})
+);
+
+export default productRouter;
