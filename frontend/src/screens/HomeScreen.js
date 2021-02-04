@@ -11,7 +11,9 @@ function HomeScreen() {
 	// const [products, setProducts] = useState([]);
 	// const [loading, setLoading] = useState(false);
 	// const [error, setError] = useState(false);
+
 	const dispatch = useDispatch();
+
 	const productList = useSelector((state) => state.productList);
 	const { products, loading, error } = productList;
 

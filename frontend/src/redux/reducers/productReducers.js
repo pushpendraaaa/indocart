@@ -13,7 +13,7 @@ import {
 	PRODUCT_SAVE_SUCCESS,
 } from "../constants/productConstants";
 
-export function productListReducer(state = { products: [] }, action) {
+export function productListReducer(state = { loading: true, products: [] }, action) {
 	switch (action.type) {
 		case PRODUCT_LIST_REQUEST:
 			return { loading: true, products: [] };
