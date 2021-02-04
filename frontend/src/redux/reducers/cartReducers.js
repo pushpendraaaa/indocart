@@ -12,15 +12,16 @@ export function cartReducer(
 	switch (action.type) {
 		case CART_ADD_ITEM:
 			const item = action.payload;
-			const product = state.cartItems.find((x) => x.product === item.product);
-			if (product) {
+			const exitItem = state.cartItems.find((x) => x.product === item.product);
+			if (exitItem) {
 				return {
+					...state,
 					cartItems: state.cartItems.map((x) =>
-						x.product === product.product ? product : item
+						x.product === exitItem.product ? item : x
 					),
 				};
 			} else {
-				return { cartItems: [...state.cartItems, item] };
+				return { ...state, cartItems: [...state.cartItems, item] };
 			}
 		case CART_REMOVE_ITEM:
 			return {

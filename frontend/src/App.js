@@ -20,6 +20,9 @@ function App() {
 	const userSignin = useSelector((state) => state.userSignin);
 	const { userInfo } = userSignin;
 
+	const cart = useSelector((state) => state.cart);
+	const { cartItems } = cart;
+
 	const openMenu = () => {
 		document.querySelector(".sidebar").classList.add("open");
 	};
@@ -37,11 +40,18 @@ function App() {
 						<Link to="/">indocart</Link>
 					</div>
 					<div className="header-links">
-						<Link to="/cart">Cart</Link>
+						<Link to="/cart">
+							<b>Cart</b>
+							{cartItems.length > 0 && (
+								<span className="badge">{cartItems.length}</span>
+							)}
+						</Link>
 						{userInfo ? (
 							<Link to="/profile">{userInfo.name}</Link>
 						) : (
-							<Link to="/signin">Sign In</Link>
+							<Link to="/signin">
+								<b>Sign In</b>
+							</Link>
 						)}
 					</div>
 				</header>

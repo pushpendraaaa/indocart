@@ -10,8 +10,12 @@ import {
 } from "./redux/reducers/productReducers";
 import { userRegisterReducer, userSigninReducer } from "./redux/reducers/userReducers";
 
-const cartItems = Cookies.getJSON("cartItems") || [];
+// const cartItems = Cookies.getJSON("cartItems") || [];
 const userInfo = Cookies.getJSON("userInfo") || null;
+
+const cartItems = localStorage.getItem("cartItems")
+	? JSON.parse(localStorage.getItem("cartItems"))
+	: [];
 
 const initialState = {
 	cart: { cartItems, shipping: {}, payment: {} },

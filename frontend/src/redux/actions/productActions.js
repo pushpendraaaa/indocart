@@ -38,7 +38,7 @@ const saveProduct = (product) => async (dispatch, getState) => {
 			});
 			dispatch({ type: PRODUCT_SAVE_SUCCESS, payload: data });
 		}
-		const { data } = await Axios.put("/api/products/" + product._id, product, {
+		const { data } = await Axios.put(`/api/products/${product._id}`, product, {
 			headers: {
 				Authorization: "Bearer " + userInfo.token,
 			},
@@ -50,12 +50,18 @@ const saveProduct = (product) => async (dispatch, getState) => {
 };
 
 const detailsProduct = (productId) => async (dispatch) => {
+	dispatch({ type: PRODUCT_DETAILS_REQUEST, payload: productId });
 	try {
-		dispatch({ type: PRODUCT_DETAILS_REQUEST, payload: productId });
-		const { data } = await Axios.get("/api/products/" + productId);
+		const { data } = await Axios.get(`/api/products/${productId}`);
 		dispatch({ type: PRODUCT_DETAILS_SUCCESS, payload: data });
 	} catch (error) {
-		dispatch({ type: PRODUCT_DETAILS_FAIL, payload: error.message });
+		dispatch({
+			type: PRODUCT_DETAILS_FAIL,
+			payload:
+				error.response && error.response.data.message
+					? error.response.data.message
+					: error.message,
+		});
 	}
 };
 

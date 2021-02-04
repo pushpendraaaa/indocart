@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
+import LoadingBox from "../components/LoadingBox";
+import MessageBox from "../components/MessageBox";
 import Rating from "../components/Rating";
 // import { data } from "../data";
 import { detailsProduct } from "../redux/actions/productActions";
@@ -9,6 +11,7 @@ function ProductScreen(props) {
 	// console.log(props.match.params.id);
 	// const product = data.products.find((x) => x._id === props.match.params.id);
 	const dispatch = useDispatch();
+	const productId = props.match.params.id;
 
 	const [qty, setQty] = useState(1);
 
@@ -16,11 +19,11 @@ function ProductScreen(props) {
 	const { product, loading, error } = productDetails;
 
 	useEffect(() => {
-		dispatch(detailsProduct(props.match.params.id));
-	}, [dispatch, props]);
+		dispatch(detailsProduct(productId));
+	}, [dispatch, productId]);
 
 	const handleAddToCart = () => {
-		props.history.push("/cart/" + props.match.params.id + "?qty=" + qty);
+		props.history.push(`/cart/${productId}?qty=${qty}`);
 	};
 
 	return (
@@ -34,9 +37,9 @@ function ProductScreen(props) {
 				</Link>
 			</div>
 			{loading ? (
-				<div>Loading...</div>
+				<LoadingBox></LoadingBox>
 			) : error ? (
-				<div>{error}</div>
+				<MessageBox variant="danger">{error}</MessageBox>
 			) : (
 				<div className="details">
 					<div className="details-image">
@@ -77,25 +80,29 @@ function ProductScreen(props) {
 									)}
 								</div>
 							</li>
-							<li>
-								<div>Qty: </div>
-								<div>
-									<select
-										value={qty}
-										onChange={(e) => {
-											setQty(e.target.value);
-										}}
-									>
-										{[...Array(product.countInStock).keys()].map(
-											(x) => (
-												<option key={x + 1} value={x + 1}>
-													{x + 1}
-												</option>
-											)
-										)}
-									</select>
-								</div>
-							</li>
+							{product.countInStock > 0 && (
+								<>
+									<li>
+										<div>Qty: </div>
+										<div>
+											<select
+												value={qty}
+												onChange={(e) => {
+													setQty(e.target.value);
+												}}
+											>
+												{[
+													...Array(product.countInStock).keys(),
+												].map((x) => (
+													<option key={x + 1} value={x + 1}>
+														{x + 1}
+													</option>
+												))}
+											</select>
+										</div>
+									</li>
+								</>
+							)}
 							<li>
 								{product.countInStock > 0 && (
 									<button
