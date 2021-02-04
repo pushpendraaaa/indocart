@@ -2,6 +2,7 @@ import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import { addToCart, removeFromCart } from "../redux/actions/cartActions";
+import MessageBox from "../components/MessageBox";
 
 function CartScreen(props) {
 	const dispatch = useDispatch();
@@ -38,16 +39,18 @@ function CartScreen(props) {
 						</div>
 					</li>
 					{cartItems.length === 0 ? (
-						<div>Cart is empty.</div>
+						<MessageBox>
+							Cart is empty.<Link to="/">Go Shopping.</Link>
+						</MessageBox>
 					) : (
 						cartItems.map((item) => (
 							<li key={item.product}>
 								<div className="cart-image">
-									<img src={item.image} alt="Product" />
+									<img src={item.image} alt={item.name} />
 								</div>
 								<div className="cart-name">
 									<div>
-										<Link to={"/product/" + item.product}>
+										<Link to={`/product/${item.product}`}>
 											<b>{item.name}</b>
 										</Link>
 									</div>

@@ -105,8 +105,8 @@ button:hover {
 
 .badge {
 	position: absolute;
-	top: 1%;
-	left: 94%;
+	top: 0.01%;
+	left: 94.5%;
 	background-color: #f02020;
 	color: #ffffff;
 	border-radius: 50%;
@@ -164,6 +164,10 @@ button:hover {
 
 .col-2 {
 	flex: 2 1 50rem;
+}
+
+.min-30 {
+	min-width: 30rem;
 }
 
 /* Alert */
@@ -246,6 +250,22 @@ button:hover {
 
 .product-rating span:last-child {
 	color: #404040;
+}
+
+/* Image */
+
+img.small {
+	max-width: 5rem;
+	width: 100%;
+}
+
+img.medium {
+	max-width: 29rem;
+	width: 100%;
+}
+
+img.large {
+	width: 100%;
 }
 
 /* Sidebar */

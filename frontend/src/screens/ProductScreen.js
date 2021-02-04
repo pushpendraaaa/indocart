@@ -60,6 +60,13 @@ function ProductScreen(props) {
 								Price: <b>${product.price}</b>
 							</li>
 							<li>Description: {product.description}</li>
+							<li>
+								<img
+									className="small"
+									src={product.image}
+									alt={product.name}
+								/>
+							</li>
 						</ul>
 					</div>
 					<div className="details-action">
