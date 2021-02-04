@@ -1,5 +1,4 @@
 import Axios from "axios";
-import Cookies from "js-cookie";
 import {
 	CART_ADD_ITEM,
 	CART_REMOVE_ITEM,
@@ -34,7 +33,8 @@ export const removeFromCart = (productId) => (dispatch, getState) => {
 	const {
 		cart: { cartItems },
 	} = getState();
-	Cookies.set("cartItems", JSON.stringify(cartItems));
+	// Cookies.set("cartItems", JSON.stringify(cartItems));
+	localStorage.setItem("cartItems", JSON.stringify(cartItems));
 };
 
 export const saveShipping = (data) => (dispatch) => {
