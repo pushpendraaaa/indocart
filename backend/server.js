@@ -37,7 +37,10 @@ app.use("/api/products", productRoute);
 // 	res.send(data.products);
 // });
 
-const port = 5000;
+app.get("/", (req, res) => {
+	res.send("Server is ready.");
+});
+const port = process.env.PORT || 5000;
 app.listen(port, () => {
 	console.log(`Server started at http://localhost:${port}`);
 });

@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
+import Rating from "../components/Rating";
 // import { data } from "../data";
 import { detailsProduct } from "../redux/actions/productActions";
 
@@ -26,7 +27,10 @@ function ProductScreen(props) {
 		<div>
 			<div className="back-to-result">
 				<Link to="/">
-					<b>&larr;</b>Back to result
+					<b>
+						<i className="fas fa-arrow-left"></i>
+					</b>
+					Back to result
 				</Link>
 			</div>
 			{loading ? (
@@ -44,7 +48,10 @@ function ProductScreen(props) {
 								<h4>{product.name}</h4>
 							</li>
 							<li>
-								{product.rating} Stars ({product.numReviews} Reviews)
+								<Rating
+									rating={product.rating}
+									numReviews={product.numReviews}
+								/>
 							</li>
 							<li>
 								Price: <b>${product.price}</b>
@@ -55,26 +62,39 @@ function ProductScreen(props) {
 					<div className="details-action">
 						<ul>
 							<li>
-								Price: <b>${product.price}</b>
+								<div>Price:</div>{" "}
+								<div>
+									<b>${product.price}</b>
+								</div>
 							</li>
 							<li>
-								Status:{" "}
-								{product.countInStock > 0 ? "In Stock" : "Unavailable"}
+								<div>Status:</div>{" "}
+								<div>
+									{product.countInStock > 0 ? (
+										<span className="success">In Stock</span>
+									) : (
+										<span className="danger">Unavailable</span>
+									)}
+								</div>
 							</li>
 							<li>
-								Qty:{" "}
-								<select
-									value={qty}
-									onChange={(e) => {
-										setQty(e.target.value);
-									}}
-								>
-									{[...Array(product.countInStock).keys()].map((x) => (
-										<option key={x + 1} value={x + 1}>
-											{x + 1}
-										</option>
-									))}
-								</select>
+								<div>Qty: </div>
+								<div>
+									<select
+										value={qty}
+										onChange={(e) => {
+											setQty(e.target.value);
+										}}
+									>
+										{[...Array(product.countInStock).keys()].map(
+											(x) => (
+												<option key={x + 1} value={x + 1}>
+													{x + 1}
+												</option>
+											)
+										)}
+									</select>
+								</div>
 							</li>
 							<li>
 								{product.countInStock > 0 && (

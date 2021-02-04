@@ -1,12 +1,16 @@
 import React, { useEffect } from "react";
-import { Link } from "react-router-dom";
 // import axios from "axios";
 import { useDispatch, useSelector } from "react-redux";
 import { listProducts } from "../redux/actions/productActions";
+import Product from "../components/Product";
+import LoadingBox from "../components/LoadingBox";
+import MessageBox from "../components/MessageBox";
 // import { data } from "../data";
 
 function HomeScreen() {
 	// const [products, setProducts] = useState([]);
+	// const [loading, setLoading] = useState(false);
+	// const [error, setError] = useState(false);
 	const dispatch = useDispatch();
 	const productList = useSelector((state) => state.productList);
 	const { products, loading, error } = productList;
@@ -15,53 +19,27 @@ function HomeScreen() {
 		dispatch(listProducts());
 
 		// const fetchData = async () => {
+		// try {
+		// setLoading(true);
 		// 	const { data } = await axios.get("/api/products");
+		// setLoading(false);
 		// 	setProducts(data);
 		// };
+		// } catch (error) {
+		// setError(error.message);
+		// setLoading(false);
+		// }
 		// fetchData();
 	}, [dispatch]);
 
 	return loading ? (
-		<div>Loading...</div>
+		<LoadingBox></LoadingBox>
 	) : error ? (
-		<div>{error}</div>
+		<MessageBox variant="danger">{error}</MessageBox>
 	) : (
 		<ul className="products">
 			{products.map((product) => (
-				<li key={product._id}>
-					<div className="product">
-						<Link to={"/product/" + product._id}>
-							<img
-								className="product-image"
-								src={product.image}
-								alt={product.name}
-							/>
-						</Link>
-						<div className="product-name">
-							<Link to={"/product/" + product._id}>{product.name}</Link>
-						</div>
-						<div className="product-brand">{product.brand}</div>
-						<div className="product-price">${product.price}</div>
-						<div className="product-rating">
-							{/* {product.rating} stars ({product.numReviews} reviews ) */}
-							<span>
-								<i className="fa fa-star"></i>
-							</span>
-							<span>
-								<i className="fa fa-star"></i>
-							</span>
-							<span>
-								<i className="fa fa-star"></i>
-							</span>
-							<span>
-								<i className="fa fa-star"></i>
-							</span>
-							<span>
-								<i className="fa fa-star"></i>
-							</span>
-						</div>
-					</div>
-				</li>
+				<Product key={product._id} product={product} />
 			))}
 		</ul>
 	);
