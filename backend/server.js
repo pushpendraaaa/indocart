@@ -9,6 +9,7 @@ import userRouter from "./routers/userRouter";
 import productRouter from "./routers/productRouter";
 
 dotenv.config();
+
 const mongodbUrl = config.MONGODB_URL;
 mongoose
 	.connect(mongodbUrl, {
@@ -20,7 +21,9 @@ mongoose
 
 const app = express();
 
+// app.use(express.json());
 app.use(bodyParser.json());
+app.use(express.urlencoded({ extended: true }));
 
 app.use("/api/users", userRouter);
 app.use("/api/products", productRouter);
@@ -38,7 +41,7 @@ app.use("/api/products", productRouter);
 // 	res.send(data.products);
 // });
 
-app.use((err, req, res, next) => {
+app.use((err, req, res) => {
 	res.status(500).send({ message: err.message });
 });
 

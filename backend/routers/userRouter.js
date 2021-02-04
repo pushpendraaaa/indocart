@@ -1,8 +1,9 @@
 import express from "express";
+import bcrypt from "bcryptjs";
 import expressAsyncHandler from "express-async-handler";
 import data from "../data";
 import User from "../models/userModel";
-import { getToken } from "../util";
+import { generateToken } from "../util";
 
 const userRouter = express.Router();
 
@@ -15,23 +16,28 @@ userRouter.get(
 	})
 );
 
-userRouter.post("/signin", async (req, res) => {
-	const signinUser = await User.findOne({
-		email: req.body.email,
-		password: req.body.password,
-	});
-	if (signinUser) {
-		res.send({
-			_id: signinUser.id,
-			name: signinUser.name,
-			email: signinUser.email,
-			isAdmin: signinUser.isAdmin,
-			token: getToken(signinUser),
+userRouter.post(
+	"/signin",
+	expressAsyncHandler(async (req, res) => {
+		const user = await User.findOne({
+			email: req.body.email,
 		});
-	} else {
-		res.status(404).send({ message: "Invalid Email or Password." });
-	}
-});
+		if (user) {
+			if (bcrypt.compareSync(req.body.password, user.password)) {
+				res.send({
+					_id: user.id,
+					name: user.name,
+					email: user.email,
+					isAdmin: user.isAdmin,
+					token: generateToken(user),
+				});
+				return;
+			} else {
+				res.status(404).send({ message: "Invalid Email or Password." });
+			}
+		}
+	})
+);
 
 userRouter.post("/register", async (req, res) => {
 	const user = new User({
@@ -46,7 +52,7 @@ userRouter.post("/register", async (req, res) => {
 			name: newUser.name,
 			email: newUser.email,
 			isAdmin: newUser.isAdmin,
-			token: getToken(newUser),
+			token: generateToken(newUser),
 		});
 	} else {
 		res.status(401).send({ message: "Invalid User Data." });
