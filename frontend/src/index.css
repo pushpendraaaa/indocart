@@ -109,6 +109,10 @@ button:hover {
 	text-align: center;
 }
 
+.otw {
+	width: 33.33%;
+}
+
 .full-width {
 	width: 100%;
 }
@@ -712,6 +716,11 @@ details-action ul {
 .search .col-1 ul li {
 	margin-left: 1rem;
 	margin-bottom: 0.2rem;
+}
+
+.search .row.evenly {
+	flex-wrap: inherit;
+	margin: 1rem;
 }
 
 /* Search */
