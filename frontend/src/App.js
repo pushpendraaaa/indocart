@@ -15,7 +15,7 @@ import AdminRoute from "./components/AdminRoute";
 import PrivateRoute from "./components/PrivateRoute";
 import OrderHistoryScreen from "./screens/OrderHistoryScreen";
 import OrderScreen from "./screens/OrderScreen";
-import ProductListScreen from "./screens/ProductListScreen";
+// import ProductListScreen from "./screens/ProductListScreen";
 import ProfileScreen from "./screens/ProfileScreen";
 import ProductEditScreen from "./screens/ProductEditScreen";
 import OrderListScreen from "./screens/OrderListScreen";
@@ -274,12 +274,12 @@ function App() {
 						<PrivateRoute path="/map" component={MapScreen}></PrivateRoute>
 						<AdminRoute
 							path="/productlist"
-							component={ProductListScreen}
+							component={ProductsScreen}
 							exact
 						></AdminRoute>
 						<AdminRoute
 							path="/productlist/pageNumber/:pageNumber"
-							component={ProductListScreen}
+							component={ProductsScreen}
 							exact
 						></AdminRoute>
 						<AdminRoute
@@ -297,17 +297,17 @@ function App() {
 						></AdminRoute>
 						<SellerRoute
 							path="/productlist/seller"
-							component={ProductListScreen}
+							component={ProductsScreen}
 						></SellerRoute>
 						<SellerRoute
 							path="/orderlist/seller"
 							component={OrderListScreen}
 						></SellerRoute>
-						<Route
+						{/* <Route
 							path="/products"
 							component={ProductsScreen}
 							exact={true}
-						></Route>
+						></Route> */}
 
 						<Route path="/" component={HomeScreen} exact={true}></Route>
 					</div>

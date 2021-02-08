@@ -37,6 +37,7 @@ export default function ProductListScreen(props) {
 	const userSignin = useSelector((state) => state.userSignin);
 	const { userInfo } = userSignin;
 	const dispatch = useDispatch();
+
 	useEffect(() => {
 		if (successCreate) {
 			dispatch({ type: PRODUCT_CREATE_RESET });
