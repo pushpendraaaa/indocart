@@ -13,7 +13,7 @@ function CartScreen(props) {
 	const qty = props.location.search ? Number(props.location.search.split("=")[1]) : 1;
 
 	const cart = useSelector((state) => state.cart);
-	const { cartItems } = cart;
+	const { cartItems, error } = cart;
 
 	useEffect(() => {
 		if (productId) {
@@ -33,14 +33,15 @@ function CartScreen(props) {
 			<div className="cart-list">
 				<ul className="cart-list-container">
 					<li>
-						<h3>Shopping Cart</h3>
+						<h2>Shopping Cart</h2>
 						<div>
-							<b>Price</b>
+							<h3>Price</h3>
 						</div>
 					</li>
+					{error && <MessageBox variant="danger">{error}</MessageBox>}
 					{cartItems.length === 0 ? (
 						<MessageBox>
-							Cart is empty.<Link to="/">Go Shopping.</Link>
+							Cart is empty.<Link to="/"> Go Shopping.</Link>
 						</MessageBox>
 					) : (
 						cartItems.map((item) => (
@@ -58,6 +59,7 @@ function CartScreen(props) {
 										Qty:{"  "}
 										<select
 											value={item.qty}
+											className="secondary"
 											onChange={(e) =>
 												dispatch(
 													addToCart(
@@ -77,6 +79,7 @@ function CartScreen(props) {
 										</select>{" "}
 										<button
 											type="button"
+											className="button secondary"
 											onClick={() =>
 												removeFromCartHandler(item.product)
 											}
@@ -98,6 +101,7 @@ function CartScreen(props) {
 					Subtotal ({cartItems.reduce((a, c) => a + c.qty, 0)} items): $
 					{cartItems.reduce((a, c) => a + c.price * c.qty, 0)}
 				</h3>
+				<br />
 				<button
 					onClick={checkOutHandler}
 					className="button primary full-width"

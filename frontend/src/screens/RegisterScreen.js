@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
+import LoadingBox from "../components/LoadingBox";
+import MessageBox from "../components/MessageBox";
 import { register } from "../redux/actions/userActions";
 
 function RegisterScreen(props) {
@@ -9,7 +11,7 @@ function RegisterScreen(props) {
 	const [name, setName] = useState("");
 	const [email, setEmail] = useState("");
 	const [password, setPassword] = useState("");
-	const [rePassword, setRePassword] = useState("");
+	const [confirmPassword, setConfirmPassword] = useState("");
 
 	const userRegister = useSelector((state) => state.userRegister);
 	const { loading, userInfo, error } = userRegister;
@@ -24,8 +26,9 @@ function RegisterScreen(props) {
 
 	const submitHandler = (e) => {
 		e.preventDefault();
-		if (rePassword === password) {
+		if (password !== confirmPassword) {
 			alert("Password are not matched.");
+		} else {
 			dispatch(register(name, email, password));
 		}
 	};
@@ -38,8 +41,8 @@ function RegisterScreen(props) {
 						<h2>Create Account</h2>
 					</li>
 					<li>
-						{loading && <div>Loading...</div>}
-						{error && <div>{error}</div>}
+						{loading && <LoadingBox></LoadingBox>}
+						{error && <MessageBox>{error}</MessageBox>}
 					</li>
 					<li>
 						<label htmlFor="name">Name</label>
@@ -47,6 +50,8 @@ function RegisterScreen(props) {
 							type="text"
 							name="name"
 							id="name"
+							placeholder="Enter name"
+							required
 							onChange={(e) => {
 								setName(e.target.value);
 							}}
@@ -58,6 +63,8 @@ function RegisterScreen(props) {
 							type="email"
 							name="email"
 							id="email"
+							placeholder="Enter email"
+							required
 							onChange={(e) => {
 								setEmail(e.target.value);
 							}}
@@ -69,19 +76,23 @@ function RegisterScreen(props) {
 							type="password"
 							name="password"
 							id="password"
+							placeholder="Enter password"
+							required
 							onChange={(e) => {
 								setPassword(e.target.value);
 							}}
 						/>
 					</li>
 					<li>
-						<label htmlFor="rePassword">Confirm Password</label>
+						<label htmlFor="confirmPassword">Confirm Password</label>
 						<input
 							type="password"
-							name="rePassword"
-							id="rePassword"
+							name="confirmPassword"
+							id="confirmPassword"
+							placeholder="Confirm password"
+							required
 							onChange={(e) => {
-								setRePassword(e.target.value);
+								setConfirmPassword(e.target.value);
 							}}
 						/>
 					</li>
@@ -92,16 +103,16 @@ function RegisterScreen(props) {
 					</li>
 					<li>
 						<span>
-							Already have an Account?{" "}
-							<Link
+							Already have an Account? <Link to={`/signin?redirect=${redirect}`}>Sign in</Link>
+							{/* <Link
 								to={
 									redirect === "/"
-										? "signin"
-										: "signin?redirect=" + redirect
+										? "/signin"
+										: `/signin?redirect=${redirect}`
 								}
 							>
 								Sign in
-							</Link>
+							</Link> */}
 						</span>
 					</li>
 				</ul>

@@ -20,6 +20,11 @@ function Product(props) {
 				<div className="product-brand">{product.brand}</div>
 				<div className="product-price">${product.price}</div>
 				<Rating rating={product.rating} numReviews={product.numReviews} />
+				{/* <div>
+					<Link to={`/seller/${product.seller._id}`}>
+						{product.seller.seller.name}
+					</Link>
+				</div> */}
 			</div>
 		</li>
 	);

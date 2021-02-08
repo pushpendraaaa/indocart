@@ -8,6 +8,7 @@ export const generateToken = (user) => {
 			name: user.name,
 			email: user.email,
 			isAdmin: user.isAdmin,
+			isSeller: user.isSeller,
 		},
 		config.JWT_SECRET || "somethingsecret",
 		{ expiresIn: "30d" }
@@ -15,16 +16,16 @@ export const generateToken = (user) => {
 };
 
 export const isAuth = (req, res, next) => {
-	const token = req.headers.authorization;
-	if (token) {
-		const onlyToken = token.slice(7, token.length);
-		jwt.verify(onlyToken, config.JWT_SECRET, (err, decode) => {
+	const authorization = req.headers.authorization;
+	if (authorization) {
+		const token = authorization.slice(7, authorization.length);
+		jwt.verify(token, config.JWT_SECRET, (err, decode) => {
 			if (err) {
 				return res.status(401).send({ message: "Invalid Token." });
+			} else {
+				req.user = decode;
+				next();
 			}
-			req.user = decode;
-			next();
-			return;
 		});
 	} else {
 		return res.status(401).send({ message: "Token is not supplied." });
@@ -36,5 +37,20 @@ export const isAdmin = (req, res, next) => {
 		return next();
 	} else {
 		res.status(401).send({ message: "Admin token is not valid." });
+	}
+};
+
+export const isSeller = (req, res, next) => {
+	if (req.user && req.user.isSeller) {
+		next();
+	} else {
+		res.status(401).send({ message: "Invalid Seller Token" });
+	}
+};
+export const isSellerOrAdmin = (req, res, next) => {
+	if (req.user && (req.user.isSeller || req.user.isAdmin)) {
+		next();
+	} else {
+		res.status(401).send({ message: "Invalid Admin/Seller Token" });
 	}
 };

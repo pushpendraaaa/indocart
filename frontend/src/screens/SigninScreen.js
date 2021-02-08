@@ -76,15 +76,21 @@ function SigninScreen(props) {
 					</li>
 					<li>
 						<Link
+							to={`/register?redirect=${redirect}`}
+							className="button text-center"
+						>
+							Create an Account
+						</Link>
+						{/* <Link
 							to={
 								redirect === "/"
-									? "register"
-									: "register?redirect=" + redirect
+									? "/register"
+									: `/register?redirect=${redirect}`
 							}
 							className="button secondary text-center"
 						>
 							Create an Account
-						</Link>
+						</Link> */}
 					</li>
 				</ul>
 			</form>
