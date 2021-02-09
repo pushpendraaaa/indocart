@@ -621,22 +621,25 @@ details-action ul {
 	align-items: flex-end;
 }
 
-/* .cart-image {
-	flex: 1 1;
+/* .cart-list-item {
+	display: flex;
 } */
 
-.cart-name {
-	font-size: 2rem;
+.cart-image {
+	flex: 1 1;
 }
 
-.cart-name > div:first-child {
-	/* flex: 8 1; */
-	font-size: 2rem;
+.cart-name {
+	flex: 8 1;
 }
 
 .cart-price {
-	/* flex: 1 1; */
+	flex: 1 1;
 	font-size: 2.5rem;
+}
+
+.cart-name > div:first-child {
+	font-size: 2rem;
 }
 
 /* Form */

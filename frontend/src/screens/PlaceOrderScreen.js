@@ -79,8 +79,8 @@ function PlaceOrderScreen(props) {
 										<div className="cart-image">
 											<img src={item.image} alt={item.name} />
 										</div>
-										<div>
-											<div className="cart-name">
+										<div className="cart-name">
+											<div>
 												<Link to={`/product/${item.product}`}>
 													<b>{item.name}</b>
 												</Link>

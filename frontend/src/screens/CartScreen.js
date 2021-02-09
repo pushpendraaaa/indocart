@@ -45,7 +45,7 @@ function CartScreen(props) {
 						</MessageBox>
 					) : (
 						cartItems.map((item) => (
-							<li key={item.product}>
+							<li className="cart-list-item" key={item.product}>
 								<div className="cart-image">
 									<img src={item.image} alt={item.name} />
 								</div>
@@ -56,7 +56,8 @@ function CartScreen(props) {
 										</Link>
 									</div>
 									<div>
-										Qty:{"  "}
+										<strong>Qty:</strong>
+										{"  "}
 										<select
 											value={item.qty}
 											className="secondary"
